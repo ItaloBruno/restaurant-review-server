@@ -3,6 +3,14 @@ const app = express()
 
 const port = process.env.PORT || 8080;
 
+const restaurantList = [
+  { id: 1, name: 'React Cafe', address: '123 Anywhere St', image: 'circle.png', rating: 5 },
+  { id: 2, name: 'Fancy Restaurant', address: '799 Main St', image: 'square.png', rating: 3.5 },
+  { id: 3, name: 'Taco Place', address: '550 Maple Rd', image: 'star.png', rating: 4.5 },
+  { id: 4, name: "Tony's Diner", address: '4101 College St', image: 'triangle.png', rating: 4 },
+  { id: 5, name: 'Pasta Central', address: '706 Harper St', image: 'circle.png', rating: 3 },
+]
+
 app.get('/restaurants', (req, res) => {
   res.json([
     { id: 1, name: 'React Cafe', address: '123 Anywhere St', image: 'circle.png', rating: 5 },
@@ -25,11 +33,22 @@ app.get('/restaurants', (req, res) => {
     { id: 18, name: 'Coffee Central', address: '3228 Oakwood Circle', image: 'square.png', rating: 4.5 },
     { id: 19, name: "King's Garden", address: '2935 Victoria Ct', image: 'star.png', rating: 5 },
     { id: 20, name: 'Salads and More', address: '2454 Preston St', image: 'triangle.png', rating: 2 },
+    
   ])
 })
 
 app.get('/images/:image', (req, res) => {
   res.sendFile(__dirname + "/shapes/" + req.params.image)
+})
+
+app.post('/restaurant',(req,res)=>{
+  const response = restaurantList.filter(element => element.name == req.name)
+  if(response !== null){
+    res.json({success:response})
+  }
+  else{
+    res.json({error:"not found"})
+  }
 })
 
 app.post('/review', (req, res) => {
